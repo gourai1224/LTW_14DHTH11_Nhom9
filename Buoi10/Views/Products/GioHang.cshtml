@@ -1,0 +1,81 @@
+﻿@model IEnumerable<Buoi10.Models.Product>
+
+@{
+    ViewBag.Title = "GioHang";
+    if (Session["GioHang"] == null)
+    {
+        Session["GioHang"] = new List<Buoi10.Models.GioHangModel>();
+    }
+    decimal tongtien = 0;
+    List<Buoi10.Models.GioHangModel> giohang = (List<Buoi10.Models.GioHangModel>)Session["GioHang"];
+}
+
+
+<main class="col-12 col-lg-9">
+
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <h5 class="mb-3">Sản phẩm đã chọn</h5>
+            <div class="table-responsive">
+                <table class="table table-cart">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th>Sản phẩm</th>
+                            <th>Số lượng</th>
+                            <th>Đơn giá</th>
+                            <th>Thành tiền</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model.Count() == 0)
+                        {
+                            <tr>
+                                <td colspan="5">Vui Lòng Chọn Hàng</td>
+                            </tr>
+                        }
+                            @foreach (var item in Model)
+                            {
+                                var soluong = giohang.FirstOrDefault(gh => gh.ProductID == item.ProductId).Quantity;
+                                tongtien += soluong * item.Price;
+                                <tr>
+                                    <td><img src="/assets/img/@item.MainImage" alt=""></td>
+                                    <td>
+                                        <div class="fw-semibold">@item.ProductName</div>
+                                        <div class="small text-muted">Danh mục: @item.Category.CategoryGroup.GroupName /@item.Category.CatName</div>
+                                    </td>
+                                    <td>@soluong</td>
+                                    <td>₫@((item.Price / 1000).ToString("N0"))k</td>
+                                    <td>₫@((item.Price / 1000).ToString("N0"))k</td>
+                                    <td>
+
+                                        @using (Html.BeginForm("XoaGioHang", "Products", FormMethod.Post))
+                                        {
+                                            <input type="hidden" value="@item.ProductId" name="ProductID" />
+                                            <button type="submit" class="btn btn-sm text-danger small" href="#">Xóa</button>
+                                        }
+                                    </td>
+                                </tr>
+                            }
+
+                        </tbody>
+                </table>
+            </div>
+            <div class="row g-3 mt-2">
+                <div class="col-12 col-md-4 ms-auto">
+                    <div class="card shadow-sm">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between"><span>Tạm tính</span><strong>₫@((tongtien / 1000).ToString("N0"))k</strong></div>
+                            <div class="text-muted small">Phí gói: 0₫</div>
+                            <hr>
+                            <a href="@Url.Action("CheckOut", "Products")" class="btn btn-brand w-100 btn-rounded">Tiếp tục</a>
+                            <div class="small text-muted mt-2">Đăng nhập trước khi đặt hàng.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</main>

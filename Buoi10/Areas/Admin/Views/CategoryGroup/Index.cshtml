@@ -1,0 +1,52 @@
+﻿@model IEnumerable<Buoi10.Models.CategoryGroup>
+
+@{
+    ViewBag.Title = "Nhóm danh mục";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h1 class="h3 mb-0 text-gray-800">Nhóm danh mục</h1>
+    <a href="@Url.Action("Create")" class="btn btn-success btn-sm shadow-sm">
+        <i class="fas fa-plus"></i> Thêm nhóm mới
+    </a>
+</div>
+
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">Danh sách nhóm (Cha)</h6>
+    </div>
+    <div class="card-body">
+        <table class="table table-bordered table-hover">
+            <thead class="table-light">
+                <tr>
+                    <th style="width:5%">STT</th>
+                    <th>Mã nhóm</th>
+                    <th>Tên nhóm</th>
+                    <th>Thứ tự</th>
+                    <th>Trạng thái</th>
+                    <th style="width:15%">Thao tác</th>
+                </tr>
+            </thead>
+            <tbody>
+                @{ int i = 1; }
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td class="text-center">@(i++)</td>
+                        <td><code>@item.GroupCode</code></td>
+                        <td class="fw-bold text-primary">@item.GroupName</td>
+                        <td class="text-center">@item.SortOrder</td>
+                        <td class="text-center">
+                            @(item.IsActive ? Html.Raw("<span class='badge bg-success'>Hiện</span>") : Html.Raw("<span class='badge bg-secondary'>Ẩn</span>"))
+                        </td>
+                        <td class="text-center">
+                            <a href="@Url.Action("Edit", new { id = item.GroupId })" class="btn btn-primary btn-sm"><i class="fas fa-edit"></i></a>
+                            <a href="@Url.Action("Delete", new { id = item.GroupId })" class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

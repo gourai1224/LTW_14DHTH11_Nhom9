@@ -1,0 +1,101 @@
+﻿@model IEnumerable<Buoi10.Models.Product>
+
+@{
+    ViewBag.Title = "Quản lý sản phẩm";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h1 class="h3 mb-0 text-gray-800">Danh sách Sản phẩm</h1>
+    <div>
+        <a href="@Url.Action("Index", "HomeAdmin")" class="btn btn-secondary btn-sm shadow-sm me-2">
+            <i class="fas fa-arrow-left fa-sm text-white-50"></i> Quay lại
+        </a>
+        <a href="@Url.Action("Create")" class="btn btn-success btn-sm shadow-sm">
+            <i class="fas fa-plus fa-sm text-white-50"></i> Thêm mới
+        </a>
+    </div>
+</div>
+
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">Dữ liệu kho hoa</h6>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover" id="dataTable" width="100%" cellspacing="0">
+                <thead class="table-light">
+                    <tr>
+                        <th style="width: 5%">STT</th>
+                        <th style="width: 10%">Ảnh</th>
+                        <th style="width: 30%">Tên sản phẩm</th>
+                        <th style="width: 15%">Danh mục</th>
+                        <th style="width: 15%">Giá bán</th>
+                        <th style="width: 10%">Trạng thái</th>
+                        <th style="width: 15%">Thao tác</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{ int i = 1; }
+                    @foreach (var item in Model)
+                    {
+                        <tr class="align-middle">
+                            <td class="text-center">@(i++)</td>
+
+                            <td class="text-center">
+                                <img src="~/assets/img/@item.MainImage"
+                                     class="img-thumbnail"
+                                     style="width: 70px; height: 70px; object-fit: cover;"
+                                     alt="@item.ProductName" />
+                            </td>
+
+                            <td class="fw-bold text-dark">
+                                @item.ProductName
+                                <br />
+                                <small class="text-muted">SKU: @item.SKU</small>
+                            </td>
+
+                            <td>@item.Category.CatName</td>
+
+                            <td class="text-danger fw-bold">
+                                @String.Format("{0:N0}", item.Price) đ
+                            </td>
+
+                            <td class="text-center">
+                                @if (item.IsActive == true)
+                                {
+                                    <span class="badge bg-success">Đang bán</span>
+                                }
+                                else
+                                {
+                                    <span class="badge bg-secondary">Tạm ẩn</span>
+                                }
+                            </td>
+
+                            <td class="text-center">
+                                <a href="@Url.Action("Edit", new { id = item.ProductId })"
+                                   class="btn btn-primary btn-sm" title="Sửa">
+                                    <i class="fas fa-edit"></i>
+                                </a>
+
+                                <a href="@Url.Action("Delete", new { id = item.ProductId })"
+                                   class="btn btn-danger btn-sm" title="Xóa"
+                                   onclick="return confirm('Bạn có chắc chắn muốn xóa sản phẩm @item.ProductName không?')">
+                                    <i class="fas fa-trash"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+
+        @if (Model.Count() == 0)
+        {
+            <div class="text-center py-5 text-muted">
+                <i class="fas fa-box-open fa-3x mb-3"></i>
+                <p>Chưa có sản phẩm nào trong kho.</p>
+            </div>
+        }
+    </div>
+</div>

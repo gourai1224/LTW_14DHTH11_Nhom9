@@ -1,0 +1,43 @@
+﻿@model Buoi10.Models.Order
+
+@{
+    ViewBag.Title = "Cập nhật trạng thái";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card shadow mb-4 border-left-warning">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">Cập nhật trạng thái đơn #@Model.OrderId</h6>
+            </div>
+            <div class="card-body">
+                <div class="alert alert-info">
+                    Trạng thái hiện tại: <strong>@Model.Status</strong>
+                </div>
+
+                <form method="post">
+                    <div class="form-group mb-4">
+                        <label class="fw-bold mb-2">Chọn trạng thái mới:</label>
+                        <select name="status" class="form-control form-select form-select-lg">
+                            <option value="NEW" @(Model.Status == "NEW" ? "selected" : "")>🟡 Đơn mới (Chờ duyệt)</option>
+                            <option value="CONFIRMED" @(Model.Status == "CONFIRMED" ? "selected" : "")>🔵 Đã xác nhận (Đang làm hoa)</option>
+                            <option value="SHIPPING" @(Model.Status == "SHIPPING" ? "selected" : "")>🚚 Đang giao hàng (Shipper đang đi)</option>
+                            <option value="DONE" @(Model.Status == "DONE" ? "selected" : "")>✅ Hoàn thành (Đã nhận tiền)</option>
+                            <option value="CANCEL" @(Model.Status == "CANCEL" ? "selected" : "")>❌ Hủy đơn (Bom hàng/Khách hủy)</option>
+                        </select>
+                    </div>
+
+                    <div class="d-flex justify-content-between">
+                        <a href="@Url.Action("Index")" class="btn btn-secondary">
+                            <i class="fas fa-times"></i> Hủy bỏ
+                        </a>
+                        <button type="submit" class="btn btn-success btn-lg px-4">
+                            <i class="fas fa-save"></i> Lưu thay đổi
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

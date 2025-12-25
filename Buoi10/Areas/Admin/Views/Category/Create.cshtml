@@ -1,0 +1,18 @@
+﻿@model Buoi10.Models.Category
+@{
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<form method="post">
+    <label>Tên loại</label>
+    @Html.TextBoxFor(m => m.CatName, new { @class = "form-control" })
+
+    <label>Nhóm</label>
+    @Html.DropDownList("GroupId", null, "-- chọn --", new { @class = "form-control" })
+
+    <label>Active</label>
+    @Html.CheckBoxFor(m => m.IsActive)
+
+    <br />
+    <button class="btn btn-primary">Lưu</button>
+</form>

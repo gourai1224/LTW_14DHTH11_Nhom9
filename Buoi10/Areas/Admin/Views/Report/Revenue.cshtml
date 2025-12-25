@@ -1,0 +1,144 @@
+﻿@model List<Buoi10.Models.RevenueVM>
+
+@{
+    ViewBag.Title = "Báo cáo doanh thu";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h1 class="h3 mb-0 text-gray-800">Báo cáo Doanh thu</h1>
+    <a href="@Url.Action("Index", "HomeAdmin")" class="btn btn-secondary btn-sm shadow-sm">
+        <i class="fas fa-arrow-left"></i> Quay lại
+    </a>
+</div>
+
+<div class="row">
+    <div class="col-xl-8 col-lg-7">
+        <div class="card shadow mb-4">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">Biểu đồ tăng trưởng</h6>
+            </div>
+            <div class="card-body">
+                <div class="chart-area">
+                    <canvas id="myAreaChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-xl-4 col-lg-5">
+        <div class="card shadow mb-4">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">Chi tiết theo tháng</h6>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered table-striped" width="100%" cellspacing="0">
+                        <thead>
+                            <tr>
+                                <th>Tháng</th>
+                                <th>Tổng tiền</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>Tháng @item.Month/@item.Year</td>
+                                    <td class="text-right text-danger font-weight-bold">
+                                        @String.Format("{0:N0}", item.Total) đ
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // 1. Chuẩn bị dữ liệu từ C# đổ sang Javascript
+    var labels = []; // Chứa tên tháng (Trục ngang)
+    var data = [];   // Chứa doanh thu (Trục dọc)
+
+    @if(Model != null)
+    {
+        foreach(var item in Model)
+        {
+            // Đẩy từng dòng dữ liệu vào mảng JS
+            @:labels.push("Thg @item.Month/@item.Year");
+            @:data.push(@item.Total);
+        }
+    }
+
+    // 2. Vẽ biểu đồ
+    var ctx = document.getElementById("myAreaChart");
+    var myBarChart = new Chart(ctx, {
+        type: 'bar', // Loại biểu đồ: bar (cột), line (đường), pie (tròn)
+        data: {
+            labels: labels,
+            datasets: [{
+                label: "Doanh thu",
+                backgroundColor: "#4e73df",
+                hoverBackgroundColor: "#2e59d9",
+                borderColor: "#4e73df",
+                data: data,
+            }],
+        },
+        options: {
+            maintainAspectRatio: false,
+            layout: {
+                padding: {
+                    left: 10,
+                    right: 25,
+                    top: 25,
+                    bottom: 0
+                }
+            },
+            scales: {
+                xAxes: [{
+                    gridLines: {
+                        display: false,
+                        drawBorder: false
+                    },
+                    ticks: {
+                        maxTicksLimit: 6
+                    },
+                    maxBarThickness: 25,
+                }],
+                yAxes: [{
+                    ticks: {
+                        min: 0,
+                        padding: 10,
+                        // Format tiền tệ cho trục Y (thêm chữ đ)
+                        callback: function(value, index, values) {
+                            return value.toLocaleString('vi-VN') + ' đ';
+                        }
+                    },
+                    gridLines: {
+                        color: "rgb(234, 236, 244)",
+                        zeroLineColor: "rgb(234, 236, 244)",
+                        drawBorder: false,
+                        borderDash: [2],
+                        zeroLineBorderDash: [2]
+                    }
+                }],
+            },
+            legend: {
+                display: false
+            },
+            tooltips: {
+                callbacks: {
+                    label: function(tooltipItem, chart) {
+                        var datasetLabel = chart.datasets[tooltipItem.datasetIndex].label || '';
+                        return datasetLabel + ': ' + tooltipItem.yLabel.toLocaleString('vi-VN') + ' đ';
+                    }
+                }
+            }
+        }
+    });
+</script>

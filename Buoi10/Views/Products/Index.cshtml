@@ -1,0 +1,84 @@
+﻿@model IEnumerable<Buoi10.Models.Product>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!--Start main -->
+
+<main class="col-12 col-lg-11">
+
+    <section class="hero p-4"
+             style="background-image: url('@Url.Content("~/assets/img/shop-hoa.png")');
+                background-position: center;
+                background-size: cover;
+                background-repeat: no-repeat;">
+        <div class="row">
+            <div class="col-12 col-lg-8 pt-5 mt-4">
+                <h2 class="display-6 fw-bold text-white">Bó hoa tinh tế cho mọi khoảnh khắc</h2>
+                <p class="lead mt-2 text-white">
+                    Cửa hàng bán hoa trực tuyến!
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-5">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <h3 class="h4 mb-0">Bó hoa nổi bật</h3>
+
+            <a href="@Url.Action("List", "Products")" class="btn btn-brand btn-rounded">Xem danh sách hoa</a>
+
+        </div>
+
+        <div class="swiper mySwiper">
+            <div class="swiper-wrapper">
+                @foreach (var item in Model.Take(7))
+                {
+                    <div class="swiper-slide">
+
+                        <article class="card-product">
+
+                            <a href="@Url.Action("Details", "Products", new { id = item.ProductId })">
+
+                                <div class="thumb" style="background-image:url('/assets/img/@item.MainImage')"></div>
+                            </a>
+                            <div class="p-3">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <h4 class="h6 mb-0"><a href="detail.html" class="link-dark">@item.ProductName</a></h4>
+                                    <span class="badge badge-soft">Mới</span>
+                                </div>
+                                <div class="text-muted small mt-1">Hoa hồng, baby • Tông pastel</div>
+                                <div class="d-flex justify-content-between align-items-center mt-2">
+                                    <span class="fw-semibold">₫@((item.Price / 1000).ToString("N0"))k</span>
+                                    <span class="badge badge-green">Gói quà miễn phí</span>
+                                </div>
+                            </div>
+                        </article>
+                    </div>
+                }
+            </div>
+            <div class="swiper-button-next"></div>
+            <div class="swiper-button-prev"></div>
+        </div>
+
+    </section>
+
+    <style>
+        .swiper {
+            width: 100%;
+            height: auto;
+            padding: 20px 0;
+            overflow: hidden;
+        }
+
+        .swiper-button-next, .swiper-button-prev {
+            color: #ff6b6b;
+            transform: scale(0.8);
+        }
+    </style>
+
+</main>
+
+<!--End main -->

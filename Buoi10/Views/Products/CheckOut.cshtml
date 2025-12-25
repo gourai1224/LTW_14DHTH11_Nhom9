@@ -1,0 +1,70 @@
+﻿@model IEnumerable<Buoi10.Models.Product>
+
+@{
+    ViewBag.Title = "CheckOut";
+    if (Session["GioHang"] == null)
+    {
+        Session["GioHang"] = new List<Buoi10.Models.GioHangModel>();
+    }
+    decimal tongtien = 0;
+    List<Buoi10.Models.GioHangModel> giohang = (List<Buoi10.Models.GioHangModel>)Session["GioHang"];
+}
+
+@using (Html.BeginForm("CheckOut", "Products", FormMethod.Post))
+{
+    <div class="row g-4">
+        <div class="col-12 col-lg-7">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h5 class="mb-3">Thông tin giao hàng</h5>
+                    <div class="row g-3">
+                        <div class="col-12 col-md-6">
+                            <label class="form-label">Họ tên</label>
+                            <input class="form-control" placeholder="Nguyễn Văn A" name="CustomerName">
+                        </div>
+                        <div class="col-12 col-md-6">
+                            <label class="form-label">Điện thoại</label>
+                            <input class="form-control" placeholder="09xx xxx xxx" name="Phone">
+                        </div>
+                        <div class="col-12">
+                            <label class="form-label">Địa chỉ</label>
+                            <input class="form-control" placeholder="Số nhà, đường, quận/huyện" name="AddressLine">
+                        </div>
+                        <div class="col-12">
+                            <label class="form-label">Lời chúc in trên thiệp</label>
+                            <textarea class="form-control" rows="3" placeholder="Chúc mừng sinh nhật..." name="MessageCard"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-lg-5">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h5 class="mb-3">Đơn tạm</h5>
+
+                    <tbody>
+
+                        @foreach (var item in Model)
+                        {
+                            var soluong = giohang.FirstOrDefault(gh => gh.ProductID == item.ProductId).Quantity;
+                            tongtien += soluong * item.Price;
+                            <div class="d-flex justify-content-between">
+                                <span>
+                                    @item.ProductName &times;
+                                    @soluong
+                                </span><strong>₫450k</strong>
+                            </div>
+                        }
+
+                    </tbody>
+
+                    <div class="text-muted small">Phí ship: 0₫ (nội thành)</div>
+                    <hr>
+                    <button type="submit" class="btn btn-brand w-100 btn-rounded">Xác nhận</button>
+                    <div class="small text-muted mt-2">Yêu cầu đăng nhập trước khi hoàn tất.</div>
+                </div>
+            </div>
+        </div>
+    </div>
+}

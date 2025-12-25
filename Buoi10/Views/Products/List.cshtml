@@ -1,0 +1,88 @@
+﻿@model IEnumerable<Buoi10.Models.Product>
+
+@{
+    ViewBag.Title = "List";
+}
+<section class="py-4">
+    <div class="container">
+        <div class="row g-4">
+            <!-- Sidebar - Left Column -->
+            <aside class="col-12 col-lg-3">
+                <div class="cat-tree p-3 shadow-sm rounded bg-white">
+                    <h5 class="mb-3 text-brand fw-bold">Danh mục</h5>
+
+                   @Html.Action("DanhMuc", "Products")
+                </div>
+
+                <!-- Filter Section -->
+                <div class="card shadow-sm mt-4">
+                    <div class="card-body">
+                        <h6 class="mb-3 fw-bold">Bộ lọc</h6>
+                        <form method="get" action="@Url.Action("List", "Products")">
+                            <div class="mb-3">
+                                <label class="form-label">Khoảng giá</label>
+                                <select class="form-select" name="price">
+                                    <option value="">Tất cả</option>
+                                    <option value="1">&lt; 300k</option>
+                                    <option value="2">300-600k</option>
+                                    <option value="3">&gt; 600k</option>
+                                </select>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label">Tìm kiếm</label>
+                                <input class="form-control"
+                                       name="keyword"
+                                       placeholder="Tên bó hoa...">
+                            </div>
+
+                            <button type="submit" class="btn btn-brand w-100">Tìm kiếm</button>
+                        </form>
+
+                    </div>
+                </div>
+            </aside>
+            <!-- Main Content Section -->
+            <!-- MAIN -->
+            <main class="col-12 col-lg-9">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <div class="small">Đang xem: <strong>Dịp / Sinh nhật</strong></div>
+                    <div class="small">Sắp xếp: <strong>Phổ biến</strong></div>
+                </div>
+
+                <div class="row g-3">
+                    @foreach (var item in Model)
+                    {
+                        <div class="col-6 col-md-4">
+                            <article class="card card-product border-0 shadow-sm h-100">
+                                <a href="@Url.Action("Details", "Products", new { id = item.ProductId })">
+                                    <div class="thumb rounded-top"
+                                         style="background-image:url('/assets/img/@item.MainImage'); height:220px; background-size:cover; background-position:center;">
+                                    </div>
+                                </a>
+
+                                <div class="p-3">
+                                    <h6 class="mb-1">
+                                        <a href="@Url.Action("Details", "Products", new { id = item.ProductId })" class="text-dark fw-semibold">
+                                            @item.ProductName
+                                        </a>
+                                    </h6>
+
+                                    <div class="text-muted small">Hoa hồng, baby • Pastel</div>
+
+                                    <div class="d-flex justify-content-between align-items-center mt-2">
+                                        <span class="fw-bold text-brand">₫@((item.Price / 1000).ToString("N0"))k</span>
+                                        <span class="badge bg-success-subtle text-success">Gói quà miễn phí</span>
+                                    </div>
+                                </div>
+                            </article>
+                        </div>
+                    }
+                </div>
+            </main>
+
+        </div>
+    </div>
+</section>
+
+

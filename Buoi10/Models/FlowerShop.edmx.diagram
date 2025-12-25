@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="60380ec9d44b4ac7b7cea24f77a98947" Name="Diagram1" ZoomLevel="69">
+        <EntityTypeShape EntityType="FlowerShopModel.AppUser" Width="1.5" PointX="3" PointY="1.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="FlowerShopModel.Cart" Width="1.5" PointX="5.25" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="FlowerShopModel.CartItem" Width="1.5" PointX="7.5" PointY="5.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="FlowerShopModel.Category" Width="1.5" PointX="3" PointY="5.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="FlowerShopModel.CategoryGroup" Width="1.5" PointX="0.75" PointY="5.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="FlowerShopModel.CustomerAddress" Width="1.5" PointX="5.25" PointY="9.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="FlowerShopModel.Order" Width="1.5" PointX="8.25" PointY="1.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="FlowerShopModel.OrderItem" Width="1.5" PointX="10.5" PointY="5.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="FlowerShopModel.Product" Width="1.5" PointX="5.25" PointY="5" IsExpanded="true" />
+        <EntityTypeShape EntityType="FlowerShopModel.ProductImage" Width="1.5" PointX="8.375" PointY="9.5" IsExpanded="true" />
+        <AssociationConnector Association="FlowerShopModel.FK_Cart_User" ManuallyRouted="false" />
+        <AssociationConnector Association="FlowerShopModel.FK_CustomerAddress_User" ManuallyRouted="false" />
+        <AssociationConnector Association="FlowerShopModel.FK_Order_User" ManuallyRouted="false" />
+        <AssociationConnector Association="FlowerShopModel.FK_CartItem_Cart" ManuallyRouted="false" />
+        <AssociationConnector Association="FlowerShopModel.FK_CartItem_Product" ManuallyRouted="false" />
+        <AssociationConnector Association="FlowerShopModel.FK_Category_Group" ManuallyRouted="false" />
+        <AssociationConnector Association="FlowerShopModel.FK_Product_Category" ManuallyRouted="false" />
+        <AssociationConnector Association="FlowerShopModel.FK_OrderItem_Order" ManuallyRouted="false" />
+        <AssociationConnector Association="FlowerShopModel.FK_OrderItem_Product" ManuallyRouted="false" />
+        <AssociationConnector Association="FlowerShopModel.FK_ProductImage_Product" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="FlowerShopModel.Admin" Width="1.5" PointX="0.75" PointY="9.75" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

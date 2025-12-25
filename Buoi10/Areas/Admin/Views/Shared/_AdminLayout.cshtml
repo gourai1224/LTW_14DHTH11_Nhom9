@@ -1,0 +1,156 @@
+﻿<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quản trị hệ thống</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f8f9fc;
+            overflow-x: hidden;
+        }
+
+        /* 1. SIDEBAR (Cột bên trái) */
+        #wrapper {
+            display: flex;
+            width: 100%;
+        }
+
+        #sidebar-wrapper {
+            min-height: 100vh;
+            width: 250px;
+            background: linear-gradient(180deg, #4e73df 10%, #224abe 100%); /* Màu xanh giống ảnh */
+            color: #fff;
+            transition: all 0.3s;
+        }
+
+        .sidebar-heading {
+            padding: 1.5rem 1rem;
+            font-size: 1.2rem;
+            font-weight: bold;
+            text-align: center;
+            border-bottom: 1px solid rgba(255,255,255,0.15);
+        }
+
+        .list-group-item {
+            background-color: transparent;
+            color: rgba(255,255,255,0.8);
+            border: none;
+            padding: 15px 20px;
+            font-weight: 500;
+        }
+
+            .list-group-item:hover {
+                color: #fff;
+                background-color: rgba(255,255,255,0.1);
+                text-decoration: none;
+            }
+
+            .list-group-item.active {
+                color: #fff;
+                background-color: rgba(255,255,255,0.2);
+                font-weight: bold;
+                border-left: 4px solid #fff;
+            }
+
+            .list-group-item i {
+                width: 25px;
+            }
+
+        /* 2. CONTENT (Phần nội dung bên phải) */
+        #page-content-wrapper {
+            width: 100%;
+        }
+
+        /* Topbar (Thanh trắng ở trên) */
+        .topbar {
+            height: 70px;
+            background-color: #fff;
+            box-shadow: 0 .15rem 1.75rem 0 rgba(58,59,69,.15);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 2rem;
+            margin-bottom: 25px;
+        }
+
+        .user-profile {
+            font-weight: 600;
+            color: #555;
+        }
+
+        .btn-logout {
+            background-color: #4e73df;
+            color: white;
+            border-radius: 20px;
+            padding: 5px 15px;
+            font-size: 0.9rem;
+        }
+
+        /* Nội dung chính */
+        .container-fluid {
+            padding: 0 25px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="d-flex" id="wrapper">
+
+        <div id="sidebar-wrapper">
+            <div class="sidebar-heading">
+                <i class="fas fa-store"></i> FLOWER SHOP
+            </div>
+            <div class="list-group list-group-flush mt-3">
+                <a href="@Url.Action("Index", "HomeAdmin")" class="list-group-item list-group-item-action active">
+                    <i class="fas fa-tachometer-alt"></i> Dashboard
+                </a>
+                <a href="@Url.Action("Index", "Order")" class="list-group-item list-group-item-action">
+                    <i class="fas fa-shopping-cart"></i> Đơn hàng
+                </a>
+                <a href="@Url.Action("Index", "Product")" class="list-group-item list-group-item-action">
+                    <i class="fas fa-box"></i> Sản phẩm
+                </a>
+                <a href="@Url.Action("Index", "Category")" class="list-group-item list-group-item-action">
+                    <i class="fas fa-list"></i> Danh mục
+                </a>
+                <a href="@Url.Action("Index", "CategoryGroup")" class="list-group-item list-group-item-action">
+                    <i class="fas fa-layer-group"></i> Nhóm danh mục
+                </a>
+                <a href="@Url.Action("Revenue", "Report")" class="list-group-item list-group-item-action">
+                    <i class="fas fa-chart-line"></i> Doanh thu
+                </a>
+            </div>
+        </div>
+
+        <div id="page-content-wrapper">
+            <nav class="topbar">
+                <div class="text-muted small">Hôm nay: @DateTime.Now.ToString("dd/MM/yyyy")</div>
+                <div class="d-flex align-items-center gap-3">
+                    <span class="user-profile me-3">
+                        Xin chào, @(Session["Admin"] != null ? ((Buoi10.Models.Admin)Session["Admin"]).HoTen : "Admin")
+                    </span>
+                    <a href="@Url.Action("Logout", "AdminAuth", new { area = "Admin" })" class="btn btn-sm btn-logout">
+                        <i class="fas fa-sign-out-alt"></i> Thoát
+                    </a>
+                </div>
+            </nav>
+
+            <div class="container-fluid">
+                @RenderBody()
+            </div>
+        </div>
+
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+</body>
+</html>

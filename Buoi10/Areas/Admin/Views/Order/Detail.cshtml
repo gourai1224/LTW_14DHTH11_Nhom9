@@ -1,0 +1,77 @@
+﻿@model IEnumerable<Buoi10.Models.OrderItem>
+@{
+    var order = ViewBag.Order as Buoi10.Models.Order;
+    ViewBag.Title = "Chi tiết đơn hàng #" + order.OrderId;
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h1 class="h3 mb-0 text-gray-800">Chi tiết đơn hàng #@order.OrderId</h1>
+    <a href="@Url.Action("Index")" class="btn btn-secondary btn-sm shadow-sm">
+        <i class="fas fa-arrow-left"></i> Quay lại
+    </a>
+</div>
+
+<div class="row">
+    <div class="col-lg-4">
+        <div class="card shadow mb-4">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">Thông tin khách hàng</h6>
+            </div>
+            <div class="card-body">
+                <p><strong>Họ tên:</strong> @order.CustomerName</p>
+                <p><strong>Điện thoại:</strong> @order.Phone</p>
+                <p><strong>Ngày đặt:</strong> @order.CreatedAt.ToString("dd/MM/yyyy HH:mm")</p>
+                <hr>
+                <p><strong>Địa chỉ giao:</strong><br> @(order.AddressLine ?? "Tại cửa hàng")</p>
+                <p><strong>Lời nhắn:</strong><br> <em class="text-muted">"@order.MessageCard"</em></p>
+
+                <hr>
+                <div class="text-center">
+                    <a href="@Url.Action("UpdateStatus", new { id = order.OrderId })" class="btn btn-primary btn-block">
+                        <i class="fas fa-pen"></i> Cập nhật trạng thái
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-8">
+        <div class="card shadow mb-4">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">Sản phẩm đã đặt</h6>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered" width="100%" cellspacing="0">
+                        <thead class="table-light">
+                            <tr>
+                                <th>Sản phẩm</th>
+                                <th class="text-center">SL</th>
+                                <th class="text-end">Đơn giá</th>
+                                <th class="text-end">Thành tiền</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var i in Model)
+                            {
+                                <tr>
+                                    <td>@i.ProductName</td>
+                                    <td class="text-center">@i.Quantity</td>
+                                    <td class="text-end">@i.UnitPrice.ToString("N0") đ</td>
+                                    <td class="text-end fw-bold">@((i.Quantity * i.UnitPrice).ToString("N0")) đ</td>
+                                </tr>
+                            }
+                        </tbody>
+                        <tfoot>
+                            <tr class="table-primary">
+                                <td colspan="3" class="text-end fw-bold">TỔNG TIỀN THANH TOÁN:</td>
+                                <td class="text-end fw-bold text-danger fs-5">@order.TotalAmount.ToString("N0") đ</td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

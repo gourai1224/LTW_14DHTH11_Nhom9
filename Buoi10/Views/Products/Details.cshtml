@@ -1,0 +1,86 @@
+﻿@model Buoi10.Models.Product
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<main class="col-12 col-lg-9">
+
+    <div class="row g-4">
+        <div class="col-12 col-lg-7">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <div class="ratio ratio-16x9 rounded-3 bg-light border"
+                         style="background:url('/assets/img/@Model.MainImage') center/cover no-repeat;"></div>
+                    <div class="row g-2 mt-2">
+                        @foreach (var item in Model.ProductImage)
+                        {
+                            <div class="col">
+                                <div class="ratio ratio-4x3 rounded-3 bg-light border"
+                                     style="background:url('/assets/img/@item.ImageUrl') center/cover no-repeat;"></div>
+                            </div>
+                        }
+
+
+                    </div>
+                </div>
+            </div>
+            <div class="card shadow-sm mt-3">
+                <div class="card-body">
+                    <h5 class="mb-2">Mô tả</h5>
+                    <p>@Model.Summary</p>
+                    <ul class="mb-0">
+                        <li>Kích thước: tiêu chuẩn ~ 18-22 bông</li>
+                        <li>Phụ kiện: thiệp chúc mừng miễn phí</li>
+                        <li>Bảo quản: tránh nắng gắt, thay nước mỗi ngày</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-lg-5">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <nav class="small mb-2 text-muted">@Model.Category.CategoryGroup.GroupName / <strong>@Model.Category.CatName</strong></nav>
+                    <h3 class="h5 mb-0">@Model.ProductName • Tươi 3-5 ngày</h3>
+                    <div class="mt-2"><span class="h4">₫@((Model.Price / 1000).ToString("N0"))k</span></div>
+                    <hr>
+
+                    @using (Html.BeginForm("ThemGioHang", "Products", FormMethod.Post))
+                    {
+                        <input type="hidden" value="@Model.ProductId" name="ProductID" />
+                        <div class="mb-3">
+                            <label class="form-label">Số lượng</label>
+                            <div class="input-group" style="width: 150px;">                               
+                                <input type="number" class="form-control text-center" name="Quantity"
+                                       id="quantity-input" value="0" min="0">
+                                
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Lời chúc</label>
+                            <input class="form-control" placeholder="Chúc mừng sinh nhật..." name="Note">
+                        </div>
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-brand btn-rounded">Thêm vào giỏ</button>
+                        </div>
+                    }
+
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const input = document.getElementById('quantity-input');
+        const btnMinus = document.getElementById('btn-minus');
+        const btnPlus = document.getElementById('btn-plus');
+        // kiểm tra giá trị nhập trực tiếp
+        input.addEventListener('change', function () {
+            let val = parseInt(this.value);
+            if (isNaN(val) || val < 0) {
+                this.value = 0;
+            }
+        });
+    });
+</script>

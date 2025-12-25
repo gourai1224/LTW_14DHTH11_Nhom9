@@ -1,0 +1,53 @@
+﻿@model Buoi10.Models.Category
+
+@{
+    ViewBag.Title = "Sửa danh mục";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">Cập nhật danh mục</h6>
+    </div>
+    <div class="card-body">
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+            @Html.HiddenFor(model => model.CategoryId)
+
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label class="fw-bold">Tên danh mục</label>
+                    @Html.TextBoxFor(m => m.CatName, new { @class = "form-control", required = "required" })
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label class="fw-bold">Slug (URL)</label>
+                    @Html.TextBoxFor(m => m.CatSlug, new { @class = "form-control" })
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label class="fw-bold">Thuộc nhóm</label>
+                    @Html.DropDownListFor(m => m.GroupId, (SelectList)ViewBag.GroupId, new { @class = "form-control" })
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label class="fw-bold">Thứ tự sắp xếp</label>
+                    @Html.TextBoxFor(m => m.SortOrder, new { @class = "form-control", type = "number" })
+                </div>
+            </div>
+
+            <div class="form-check mb-4">
+                @Html.CheckBoxFor(m => m.IsActive, new { @class = "form-check-input" })
+                <label class="form-check-label">Hiển thị danh mục này</label>
+            </div>
+
+            <div class="d-flex justify-content-end gap-2">
+                <a href="@Url.Action("Index")" class="btn btn-secondary">Hủy</a>
+                <button type="submit" class="btn btn-primary">Lưu thay đổi</button>
+            </div>
+        }
+    </div>
+</div>

@@ -1,0 +1,38 @@
+﻿@model Buoi10.Models.AppUser
+
+@{
+    ViewBag.Title = "DangNhap";
+}
+
+
+
+<main class="col-12 col-lg-9">
+    <div class="mx-auto" style="max-width:520px">
+        <div class="card shadow-sm">
+            <div class="card-body p-4">
+                <h3 class="h5 text-center mb-3">Đăng nhập khách hàng</h3>
+                @using (Html.BeginForm())
+                {
+                    <div class="mb-3">
+                        <label class="form-label">Email</label>
+                        <input type="email" class="form-control" name="Email" placeholder="email@abc.com">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Mật khẩu</label>
+                        <input type="password" class="form-control" name="PasswordHash" placeholder="••••••••">
+                    </div>
+                    <div class="d-grid"><button type="submit" class="btn btn-brand btn-rounded">Đăng nhập</button></div>
+                }
+                <div class="text-center mt-3">
+                    <a href="@Url.Action("DangKy", "User")">Chưa có tài khoản? Đăng ký</a>
+                </div>
+
+
+                <div class="small text-muted mt-3">@ViewBag.Msg</div>
+            </div>
+        </div>
+    </div>
+</main>
+
+
+

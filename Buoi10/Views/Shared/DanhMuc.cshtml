@@ -1,0 +1,24 @@
+﻿@model IEnumerable<Buoi10.Models.CategoryGroup>
+
+@{
+    ViewBag.Title = "DanhMuc";
+}
+
+<div class="cat-tree">
+
+    @foreach (var item in Model)
+    {
+        <details open>
+            <summary>@item.GroupName</summary>
+            <div class="children">
+                @foreach (var subitem in item.Category)
+                {
+                    <a href="@Url.Action("List", "Products",new {MaDM = subitem.CategoryId})">@subitem.CatName</a>
+
+                }
+            </div>
+        </details>
+    }
+</div>
+
+

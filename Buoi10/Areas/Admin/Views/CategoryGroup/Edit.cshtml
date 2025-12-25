@@ -1,0 +1,42 @@
+﻿@model Buoi10.Models.CategoryGroup
+
+@{
+    ViewBag.Title = "Sửa nhóm";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="card shadow mb-4" style="max-width: 600px; margin: 0 auto;">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">Cập nhật nhóm danh mục</h6>
+    </div>
+    <div class="card-body">
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+            @Html.HiddenFor(m => m.GroupId) <div class="mb-3">
+                <label class="fw-bold">Tên nhóm</label>
+                @Html.TextBoxFor(m => m.GroupName, new { @class = "form-control", required = "required" })
+            </div>
+
+            <div class="mb-3">
+                <label class="fw-bold">Mã nhóm</label>
+                @Html.TextBoxFor(m => m.GroupCode, new { @class = "form-control", required = "required" })
+            </div>
+
+            <div class="mb-3">
+                <label class="fw-bold">Thứ tự hiển thị</label>
+                @Html.TextBoxFor(m => m.SortOrder, new { @class = "form-control", type = "number" })
+            </div>
+
+            <div class="form-check mb-4">
+                @Html.CheckBoxFor(m => m.IsActive, new { @class = "form-check-input" })
+                <label class="form-check-label">Đang kích hoạt</label>
+            </div>
+
+            <div class="d-flex justify-content-end gap-2">
+                <a href="@Url.Action("Index")" class="btn btn-secondary">Hủy</a>
+                <button type="submit" class="btn btn-primary">Lưu thay đổi</button>
+            </div>
+        }
+    </div>
+</div>

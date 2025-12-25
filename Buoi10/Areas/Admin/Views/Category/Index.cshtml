@@ -1,0 +1,58 @@
+﻿@model IEnumerable<Buoi10.Models.Category>
+
+@{
+    ViewBag.Title = "Quản lý danh mục";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h1 class="h3 mb-0 text-gray-800">Danh mục sản phẩm</h1>
+    <a href="@Url.Action("Create")" class="btn btn-success btn-sm shadow-sm">
+        <i class="fas fa-plus"></i> Thêm mới
+    </a>
+</div>
+
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">Danh sách</h6>
+    </div>
+    <div class="card-body">
+        <table class="table table-bordered table-hover">
+            <thead class="table-light">
+                <tr>
+                    <th>STT</th>
+                    <th>Tên danh mục</th>
+                    <th>Slug</th>
+                    <th>Thuộc nhóm</th>
+                    <th>Thứ tự</th>
+                    <th>Trạng thái</th>
+                    <th>Thao tác</th>
+                </tr>
+            </thead>
+            <tbody>
+                @{ int i = 1; }
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td class="text-center">@(i++)</td>
+                        <td class="fw-bold text-primary">@item.CatName</td>
+                        <td><code>@item.CatSlug</code></td>
+                        <td>
+                            <span class="badge bg-info text-dark">
+                                @(item.CategoryGroup != null ? item.CategoryGroup.GroupName : "Chưa phân nhóm")
+                            </span>
+                        </td>
+                        <td class="text-center">@item.SortOrder</td>
+                        <td class="text-center">
+                            @(item.IsActive == true ? Html.Raw("<i class='fas fa-check-circle text-success'></i>") : Html.Raw("<i class='fas fa-times-circle text-secondary'></i>"))
+                        </td>
+                        <td class="text-center">
+                            <a href="@Url.Action("Edit", new { id = item.CategoryId })" class="btn btn-primary btn-sm"><i class="fas fa-edit"></i></a>
+                            <a href="@Url.Action("Delete", new { id = item.CategoryId })" class="btn btn-danger btn-sm" onclick="return confirm('Bạn muốn xóa danh mục này?');"><i class="fas fa-trash"></i></a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

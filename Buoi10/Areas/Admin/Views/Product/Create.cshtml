@@ -1,0 +1,44 @@
+﻿@model Buoi10.Models.Product
+
+@{
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+@using (Html.BeginForm("Create", "Product", FormMethod.Post,
+        new { area = "Admin", enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+
+    <label>Tên sản phẩm</label>
+    @Html.TextBoxFor(m => m.ProductName, new { @class = "form-control" })
+
+    <label>Danh mục</label>
+    @Html.DropDownListFor(
+        m => m.CategoryId,
+        (SelectList)ViewBag.CategoryId,
+        "-- chọn --",
+        new { @class = "form-control" }
+    )
+
+    <label>SKU</label>
+    @Html.TextBoxFor(m => m.SKU, new { @class = "form-control" })
+
+    <label>Giá</label>
+    @Html.TextBoxFor(m => m.Price, new { @class = "form-control", type = "number" })
+
+    <label>Tồn kho</label>
+    @Html.TextBoxFor(m => m.Stock, new { @class = "form-control", type = "number" })
+
+    <label>Mô tả ngắn</label>
+    @Html.TextAreaFor(m => m.Summary, new { @class = "form-control" })
+
+    <label>Ảnh sản phẩm</label>
+    <input type="file" name="uploadImage" class="form-control" />
+
+    <label>Kích hoạt</label>
+    @Html.CheckBoxFor(m => m.IsActive)
+
+    <br />
+    <br />
+    <button type="submit" class="btn btn-primary">Lưu</button>
+}

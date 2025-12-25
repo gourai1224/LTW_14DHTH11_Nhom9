@@ -1,0 +1,111 @@
+﻿<!doctype html>
+<html lang="vi">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Danh sách Hoa</title>
+    <link href="@Url.Content("~/assets/css/bootstrap.min.css")" rel="stylesheet" />
+    <link href="@Url.Content("~/assets/css/styles.css")" rel="stylesheet" />
+    @*thêm thư viện swiper để làm slider*@
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+</head>
+
+<body>
+    <nav class="nav-glass py-3">
+        <div class="container d-flex justify-content-between align-items-center">
+            <a class="brand h4 " href="@Url.Action("Index", "Products")">Shop Hoa Xinh</a>
+            <div class="d-flex gap-2 align-items-center">
+                @if (Session["user"] != null)
+                {
+                    var user = (Buoi10.Models.AppUser)Session["user"];
+                    <span class="text-black">
+                        Xin chào, <strong>@user.FullName</strong>
+                    </span>
+
+                    <a class="btn btn-ghost btn-sm" href="@Url.Action("DangXuat","User")">
+                        Đăng xuất
+                    </a>
+                }
+                else
+                {
+                    <a class="btn btn-ghost btn-sm" href="@Url.Action("DangNhap","User")">
+                        Đăng nhập
+                    </a>
+                }
+
+                <a class="btn btn-brand btn-sm" href="@Url.Action("GioHang", "Products")">
+                    Giỏ hàng
+                </a>
+            </div>
+
+        </div>
+    </nav>
+
+    <section class="py-4">
+        <div class="container">
+            <div class="row g-4 justify-content-center">
+                <main class="col-12 col-lg-10">
+                    @RenderBody()
+                </main>
+            </div>
+        </div>
+    </section>
+
+    @*thêm thư viện swiper để làm slider*@
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
+    <!-- Footer Section -->
+    <footer class="mt-5 bg-dark text-white py-4">
+        <div class="container">
+            <div class="row g-4">
+                <div class="col-12 col-md-6">
+                    <h5 class="mb-2">Shop Hoa Xinh</h5>
+                    <p class="mb-0">Cửa hàng hoa trực tuyến </p>
+                </div>
+                <div class="col-12 col-md-3">
+                    <h6>Liên kết</h6>
+                    <ul class="list-unstyled">
+                        <li><a href="index.html" class="text-white">Trang chủ</a></li>
+                        <li><a href="list.html" class="text-white">Danh sách</a></li>
+                        <li><a href="cart.html" class="text-white">Giỏ hàng</a></li>
+                        <li><a href="login.html" class="text-white">Đăng nhập</a></li>
+                    </ul>
+                </div>
+            </div>
+            <hr class="border-secondary my-4">
+            <div class="d-flex justify-content-between small">
+                <span>© Nhóm 9</span>
+                <span>Lập Trình Web</span>
+            </div>
+        </div>
+    </footer>
+</body>
+
+</html>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        var swiper = new Swiper(".mySwiper", {
+            slidesPerView: 1,
+            spaceBetween: 10,
+            breakpoints: {
+                640: {
+                    slidesPerView: 2,
+                    spaceBetween: 20,
+                },
+                768: {
+                    slidesPerView: 3,
+                    spaceBetween: 30,
+                },
+                1024: {
+                    slidesPerView: 4,
+                    spaceBetween: 40,
+                },
+            },
+            navigation: {
+                nextEl: ".swiper-button-next",
+                prevEl: ".swiper-button-prev",
+            },
+        });
+    });
+</script>
