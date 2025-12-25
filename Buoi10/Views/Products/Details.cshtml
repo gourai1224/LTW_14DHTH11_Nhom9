@@ -50,10 +50,12 @@
                         <input type="hidden" value="@Model.ProductId" name="ProductID" />
                         <div class="mb-3">
                             <label class="form-label">Số lượng</label>
-                            <div class="input-group" style="width: 150px;">                               
+                            <div class="input-group" style="width: 150px;">
                                 <input type="number" class="form-control text-center" name="Quantity"
-                                       id="quantity-input" value="0" min="0">
-                                
+                                       id="quantity-input" value="1" min="0" max="@Model.Stock">
+                            </div>
+                            <div class="mt-1">
+                                <small class="text-danger fw-bold">Kho còn lại: @Model.Stock</small>
                             </div>
                         </div>
                         <div class="mb-3">

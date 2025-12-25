@@ -168,7 +168,7 @@ namespace Buoi10.Controllers
             giohang.Add(model);
             Session["GioHang"] = giohang;
 
-            return RedirectToAction("GioHang");
+            return RedirectToAction("List");
         }
 
         public ActionResult XoaGioHang(int ProductID)
@@ -200,6 +200,23 @@ namespace Buoi10.Controllers
             var products = db.Product.Where(sp => idsTrongGioHang.Contains(sp.ProductId)).Include(p => p.Category);
 
             return View(products.ToList());
+        }
+
+        [HttpPost]
+        public ActionResult CapNhatSoLuong(int ProductID, int Quantity)
+        {
+            List<GioHangModel> giohang = (List<GioHangModel>)Session["GioHang"];
+            if (giohang != null)
+            {
+                var item = giohang.FirstOrDefault(gh => gh.ProductID == ProductID);
+                if (item != null)
+                {
+                    // Cập nhật số lượng mới (đảm bảo ít nhất là 1)
+                    item.Quantity = Quantity > 0 ? Quantity : 1;
+                }
+            }
+            Session["GioHang"] = giohang;
+            return RedirectToAction("GioHang");
         }
         public ActionResult CheckOut()
         {

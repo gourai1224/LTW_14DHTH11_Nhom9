@@ -20,19 +20,19 @@
                     <div class="row g-3">
                         <div class="col-12 col-md-6">
                             <label class="form-label">Họ tên</label>
-                            <input class="form-control" placeholder="Nguyễn Văn A" name="CustomerName">
+                            <input class="form-control" placeholder="Nguyễn Văn A" name="CustomerName" required>
                         </div>
                         <div class="col-12 col-md-6">
                             <label class="form-label">Điện thoại</label>
-                            <input class="form-control" placeholder="09xx xxx xxx" name="Phone">
+                            <input class="form-control" placeholder="09xx xxx xxx" name="Phone" required>
                         </div>
                         <div class="col-12">
                             <label class="form-label">Địa chỉ</label>
-                            <input class="form-control" placeholder="Số nhà, đường, quận/huyện" name="AddressLine">
+                            <input class="form-control" placeholder="Số nhà, đường, quận/huyện" name="AddressLine" required>
                         </div>
                         <div class="col-12">
                             <label class="form-label">Lời chúc in trên thiệp</label>
-                            <textarea class="form-control" rows="3" placeholder="Chúc mừng sinh nhật..." name="MessageCard"></textarea>
+                            <textarea class="form-control" rows="3" placeholder="Hãy điền lời chúc của bạn ..." name="MessageCard"></textarea>
                         </div>
                     </div>
                 </div>
@@ -53,13 +53,14 @@
                                 <span>
                                     @item.ProductName &times;
                                     @soluong
-                                </span><strong>₫450k</strong>
+                                </span><strong>₫@((soluong * item.Price / 1000).ToString("N0"))k</strong>
                             </div>
                         }
-
                     </tbody>
 
                     <div class="text-muted small">Phí ship: 0₫ (nội thành)</div>
+                    <div class="d-flex justify-content-between"><span>Tạm tính</span><strong>₫@((tongtien / 1000).ToString("N0"))k</strong></div>
+
                     <hr>
                     <button type="submit" class="btn btn-brand w-100 btn-rounded">Xác nhận</button>
                     <div class="small text-muted mt-2">Yêu cầu đăng nhập trước khi hoàn tất.</div>
