@@ -27,12 +27,22 @@ namespace Buoi10.Controllers
 
         public ActionResult List(int? MaDM, string keyword, int? price)
         {
-            var product = db.Product.Include(p => p.Category).AsQueryable();
+            var product = db.Product.Include(p => p.Category.CategoryGroup).AsQueryable();
+
+            ViewBag.TenHienThi = "Tất cả sản phẩm";
 
             if (MaDM.HasValue)
             {
                 product = product.Where(p => p.Category.CategoryId == MaDM);
-            }
+
+                var currnetCategory = db.Category.Include(c => c.CategoryGroup)
+                    .FirstOrDefault(c => c.CategoryId==MaDM);
+
+                if (currnetCategory != null)
+                {
+                    ViewBag.TenHienThi = currnetCategory.CategoryGroup.GroupName + "/" + currnetCategory.CatName;
+                }    
+            }    
 
             if (!string.IsNullOrEmpty(keyword))
             {
